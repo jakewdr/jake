@@ -1,0 +1,1 @@
+@charset "utf-8";body{background-color:#f9f9f9;height:100vh;margin:0;overflow:hidden;width:100vw}#image-track{display:flex;left:50%;position:absolute;top:50%;transform:translate(0%,-50%);gap:4vmin;user-select:none}#image-track>.image{height:56vmin;width:40vmin;object-fit:cover;object-position:100% center}
