@@ -1,11 +1,19 @@
 import os
 import shutil
+import pathlib
 from css_html_js_minify import process_single_js_file, process_single_css_file, js_minify, css_minify
 
-process_single_js_file('src/script.js', overwrite=False)
-process_single_css_file('src/style.css', overwrite=False, sort=True)
+def pathLeaf(path) -> str:
+    return str(os.path.split(path)[1])
 
-shutil.copyfile("src/script.min.js", "dist/script.js")
-shutil.copyfile("src/style.min.css", "dist/style.css")
-os.remove("src/script.min.js")
-os.remove("src/style.min.css")
+files = [str(entry).replace(os.sep, '/') for entry in pathlib.Path("src/").iterdir()]
+
+for file in files:
+    if ".js" in file:
+        process_single_js_file(file, overwrite=False)
+        shutil.copyfile(file.replace(".js",".min.js"), f"dist/{pathLeaf(file)}")
+        os.remove(file.replace(".js",".min.js"))
+    if ".css" in file:
+        process_single_css_file(file, overwrite=False, sort=True)
+        shutil.copyfile(file.replace(".css",".min.css"), f"dist/{pathLeaf(file)}")
+        os.remove(file.replace(".css",".min.css"))
